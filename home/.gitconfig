@@ -1,0 +1,4 @@
+[color]
+        ui = true
+[hub]
+        protocol = https
