@@ -3,4 +3,7 @@
 [hub]
         protocol = https
 [core]
-		excludesfile = /Users/student/.gitignore
+        excludesfile = /Users/student/.gitignore
+[user]
+        name = MakerSquare Student
+        email = students@themakersquare.com
