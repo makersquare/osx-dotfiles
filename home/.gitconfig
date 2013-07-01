@@ -2,3 +2,5 @@
         ui = true
 [hub]
         protocol = https
+[core]
+		excludesfile = /Users/student/.gitignore
