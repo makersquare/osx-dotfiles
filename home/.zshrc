@@ -11,6 +11,7 @@ DEFAULT_USER=student
 
 # Set some pretty colors for LS.
 export LSCOLORS="FxGxBxDxCxEgEdxbxgxcxd"
+export EDITOR="subl -w"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
