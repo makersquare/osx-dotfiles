@@ -4,6 +4,9 @@
         protocol = https
 [core]
         excludesfile = /Users/student/.gitignore
+        editor = subl -w
 [user]
         name = MakerSquare Student
         email = students@themakersquare.com
+[merge]
+        tool = opendiff
