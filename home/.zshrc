@@ -57,4 +57,5 @@ source /opt/boxen/env.sh
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
+export PATH="/Applications/Postgres.app/Contents/MacOS/bin:${PATH}"
 export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/student/Dropbox/bin
