@@ -1,7 +1,7 @@
 dotfiles
 ========
 
-This is the base set of config files, or "dotfiles", used on MakerSquare lab machines. This repo is formatted to work correctly with the [homesick gem](https://github.com/technicalpickles/homesick).
+## Matt Buck is the coolest dude ever.
 
 ## I want!
 
