@@ -38,4 +38,7 @@ Thumbs.db
 
 *.orig
 
+# bundler files #
+#################
 vendor/bundle
+.bundle/
