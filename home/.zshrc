@@ -57,7 +57,7 @@ source /opt/boxen/env.sh
 source $ZSH/oh-my-zsh.sh
 
 # Don't autocorrect my commands.
-unsetopt correct
+unsetopt correct_all
 
 # Customize to your needs...
 export PATH="/Applications/Postgres.app/Contents/MacOS/bin:${PATH}"
