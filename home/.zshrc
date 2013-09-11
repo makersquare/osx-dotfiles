@@ -56,6 +56,9 @@ plugins=(git gem rails3 sublime)
 source /opt/boxen/env.sh
 source $ZSH/oh-my-zsh.sh
 
+# Don't autocorrect my commands.
+unsetopt correct
+
 # Customize to your needs...
 export PATH="/Applications/Postgres.app/Contents/MacOS/bin:${PATH}"
 export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/student/Dropbox/bin
