@@ -58,6 +58,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Don't autocorrect my commands.
 unsetopt correct_all
+unsetopt correct
 
 # Customize to your needs...
 export PATH="/Applications/Postgres.app/Contents/MacOS/bin:${PATH}"
