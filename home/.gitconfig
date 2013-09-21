@@ -3,7 +3,7 @@
 [hub]
         protocol = https
 [core]
-        excludesfile = /Users/student/.gitignore
+        excludesfile = ~/.gitignore
         editor = subl -w
 [user]
         name = MakerSquare Student
