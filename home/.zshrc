@@ -51,7 +51,7 @@ alias server='open http://localhost:8000 && python -m SimpleHTTPServer'
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git gem rails3 sublime)
+plugins=(brew bundler gem git github heroku node npm rails rails3 ruby zsh-syntax-highlighting)
 
 source /opt/boxen/env.sh
 source $ZSH/oh-my-zsh.sh
