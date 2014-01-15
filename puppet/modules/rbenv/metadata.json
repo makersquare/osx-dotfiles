@@ -1,0 +1,46 @@
+{
+  "name": "jdowning/rbenv",
+  "version": "1.0.3",
+  "source": "https://github.com/justindowning/puppet-rbenv",
+  "author": "Justin Donwing",
+  "license": "Apache License, Version 2.0",
+  "summary": "Setup rbenv ruby manager for systemwide use",
+  "description": "Setup rbenv ruby manager for systemwide use",
+  "project_page": "https://github.com/justindowning/puppet-rbenv",
+  "dependencies": [
+
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+    "CONTRIBUTORS.md": "c41ba9b9d3d416a0a52b99285f530bd6",
+    "Gemfile": "539fcce824e767006f09ebfd0a27d28e",
+    "Gemfile.lock": "5c80eff0c8e0073f16ab5029861d7370",
+    "LICENSE": "4af37e701e8f3e94c2de463993264b10",
+    "Modulefile": "a4d23fb3c8a7388264e72f7007f4a50c",
+    "README.md": "d2bd9fb8023d4bb26218315ee250628c",
+    "Rakefile": "bc9e51eaad4c6c8d5858b0a6d27dd040",
+    "Vagrantfile": "eff7e34f3c52c45e013b08d3f354dd84",
+    "manifests/build.pp": "a1ab57b5baf6fc26b8a8a94a6c2ed8cf",
+    "manifests/deps/debian.pp": "62a60ce66c7a7b352fe2f43f95f12498",
+    "manifests/deps/redhat.pp": "52722a1d575014d6dbf4f14c9f4f5b79",
+    "manifests/deps/suse.pp": "5d876c51ed51620dcf73f3ba7671067c",
+    "manifests/deps.pp": "8f5638519853dd814b57cb446b3b5f4e",
+    "manifests/gem.pp": "1f8d142c2d86851dc7cd90dbdaa7360e",
+    "manifests/init.pp": "29f6aefb1b82541f13f842b52992dec9",
+    "manifests/plugin.pp": "1a68f298d72f3d8f746adbbaa75ae976",
+    "spec/classes/rbenv_spec.rb": "c33145d8efc0c46cef738fa8a4612f11",
+    "spec/defines/build_spec.rb": "5e138f7451896055babfca9b866b388d",
+    "spec/defines/gem_spec.rb": "e79393c6bb62f7961bad4003e8f86a4c",
+    "spec/defines/plugin_spec.rb": "3c6f3f484b30db97e3eec3a092eb9c14",
+    "spec/spec_helper.rb": "0db89c9a486df193c0e40095422e19dc",
+    "templates/rbenv.sh": "709dcbed051213c8f024a72e6052ba6d",
+    "tests/build.pp": "bd00d8228efe2c06a1303fe6001951dc",
+    "tests/gem.pp": "50c8822cccc778c8ed280337a327dfe3",
+    "tests/init.pp": "512d340956c5a450ad97b94c79ffc361",
+    "tests/plugin.pp": "4543e80104e06fe40d8c2cd68f416300",
+    "tests/rbenv-vars.pp": "2fb09070c0c8cb0965ecb65bbb8e1e47",
+    "tests/vagrant.pp": "d269250ecb2ad3136203224db735da7a"
+  }
+}
