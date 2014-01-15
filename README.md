@@ -35,9 +35,9 @@ Port 3000 in the host computer is forwarded to port 3000 in the virtual machine.
 
 * Git
 
-* RVM
+* RBENV
 
-* Ruby 2.0.0 (binary RVM install)
+* Ruby 2.0.0-p247
 
 * Bundler
 
