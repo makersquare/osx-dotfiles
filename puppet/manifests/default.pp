@@ -84,6 +84,34 @@ package { 'nodejs':
   ensure => installed
 }
 
+# --- ZSH ---------------------------------------------------------------------
+
+# This should be moved into a module
+
+package { 'zsh':
+  ensure => installed
+}
+
+file_line { 'add zsh to /etc/shells':
+  path => '/etc/shells',
+  line => '/usr/bin/zsh',
+  require => Package['zsh'],
+}
+
+user { 'vagrant':
+  ensure => present,
+  shell => "/usr/bin/zsh",
+  require => File_line['add zsh to /etc/shells'],
+}
+
+exec { 'install_oh_my_zsh':
+  command => "curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh",
+  creates => "${home}/.oh-my-zsh/oh-my-zsh.sh",
+  require => [File_line['add zsh to /etc/shells'], Package['curl']]
+}
+
+#Note: I need to have a .zshrc file for them to use that specifies the options we want (i.e. turn off auto correct) and also has rbenv in the path for below
+
 # --- Ruby ---------------------------------------------------------------------
 
 class { 'rbenv': install_dir => '${home}/.rbenv' }
