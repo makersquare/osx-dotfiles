@@ -13,7 +13,9 @@ stage { 'preinstall':
 }
 
 class apt_get_update {
-  exec { 'apt-get -y update' }
+  exec { 'apt-get -y update':
+    unless => "test -e ${home}/.rbenv"
+  }
 }
 class { 'apt_get_update':
   stage => preinstall
@@ -81,41 +83,25 @@ package { ['libxml2', 'libxml2-dev', 'libxslt1-dev']:
 
 # ExecJS runtime.
 package { 'nodejs':
-  ensure => installed
+  ensure => installed,
+  require => Apt::Ppa['ppa:chris-lea/node.js'],
 }
-
-# --- ZSH ---------------------------------------------------------------------
-
-# This should be moved into a module
 
 package { 'zsh':
   ensure => installed
 }
 
-file_line { 'add zsh to /etc/shells':
-  path => '/etc/shells',
-  line => '/usr/bin/zsh',
-  require => Package['zsh'],
-}
-
-user { 'vagrant':
-  ensure => present,
-  shell => "/usr/bin/zsh",
-  require => File_line['add zsh to /etc/shells'],
-}
-
-exec { 'install_oh_my_zsh':
-  command => "curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh",
-  creates => "${home}/.oh-my-zsh/oh-my-zsh.sh",
-  require => [File_line['add zsh to /etc/shells'], Package['curl']]
-}
-
-#Note: I need to have a .zshrc file for them to use that specifies the options we want (i.e. turn off auto correct) and also has rbenv in the path for below
-
 # --- Ruby ---------------------------------------------------------------------
 
-class { 'rbenv': install_dir => '${home}/.rbenv' }
+class { 'rbenv': install_dir => "${home}/.rbenv" }
 
 rbenv::plugin { ['sstephenson/ruby-build', 'rkh/rbenv-update', 'sstephenson/rbenv-gem-rehash']: }
 rbenv::build { '2.1.0': global => true }
 rbenv::gem { 'bundle': ruby_version => '2.1.0' }
+
+class { 'apt': }
+apt::ppa { 'ppa:chris-lea/node.js': }
+
+class { 'ohmyzsh': }
+ohmyzsh::install { 'acme': }
+
