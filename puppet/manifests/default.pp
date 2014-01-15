@@ -13,9 +13,7 @@ stage { 'preinstall':
 }
 
 class apt_get_update {
-  exec { 'apt-get -y update':
-    unless => "test -e ${home}/.rvm"
-  }
+  exec { 'apt-get -y update' }
 }
 class { 'apt_get_update':
   stage => preinstall
@@ -26,37 +24,6 @@ class { 'apt_get_update':
 package { ['sqlite3', 'libsqlite3-dev']:
   ensure => installed;
 }
-
-# --- MySQL --------------------------------------------------------------------
-
-class install_mysql {
-  class { 'mysql': }
-
-  class { 'mysql::server':
-    config_hash => { 'root_password' => '' }
-  }
-
-  database { $ar_databases:
-    ensure  => present,
-    charset => 'utf8',
-    require => Class['mysql::server']
-  }
-
-  database_user { 'rails@localhost':
-    ensure  => present,
-    require => Class['mysql::server']
-  }
-
-  database_grant { ['rails@localhost/activerecord_unittest', 'rails@localhost/activerecord_unittest2', 'rails@localhost/inexistent_activerecord_unittest']:
-    privileges => ['all'],
-    require    => Database_user['rails@localhost']
-  }
-
-  package { 'libmysqlclient15-dev':
-    ensure => installed
-  }
-}
-class { 'install_mysql': }
 
 # --- PostgreSQL ---------------------------------------------------------------
 
@@ -93,10 +60,6 @@ class install_postgres {
 }
 class { 'install_postgres': }
 
-# --- Memcached ----------------------------------------------------------------
-
-class { 'memcached': }
-
 # --- Packages -----------------------------------------------------------------
 
 package { 'curl':
@@ -123,8 +86,8 @@ package { 'nodejs':
 
 # --- Ruby ---------------------------------------------------------------------
 
-class { 'rbenv': }
+class { 'rbenv': install_dir => '${home}/.rbenv' }
 
-rbenv::plugin { 'sstephenson/ruby-build': }
-rbenv::build { '2.0.0-p247': global => true }
-rbenv::gem { 'bundle': ruby_version   => '2.0.0-p247' }
+rbenv::plugin { ['sstephenson/ruby-build', 'rkh/rbenv-update', 'sstephenson/rbenv-gem-rehash']: }
+rbenv::build { '2.1.0': global => true }
+rbenv::gem { 'bundle': ruby_version => '2.1.0' }
