@@ -103,5 +103,5 @@ class { 'apt': }
 apt::ppa { 'ppa:chris-lea/node.js': }
 
 class { 'ohmyzsh': }
-ohmyzsh::install { 'acme': }
+ohmyzsh::install { 'vagrant': }
 

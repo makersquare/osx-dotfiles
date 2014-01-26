@@ -1,22 +1,20 @@
-# A Virtual Machine for Ruby on Rails Core Development
+# A Virtual Machine for MakerSquare Student Development
 
 ## Introduction
 
-This project automates the setup of a development environment for working on Ruby on Rails itself. Use this virtual machine to work on a pull request with everything ready to hack and run the test suites.
-
-**Please note this virtual machine is not designed to be used for Rails application development.**
+This project automates the setup of a development environment for MakerSquare students. Use this virtual machine to work on a pull request with everything ready to hack and run the test suites.
 
 ## Requirements
 
 * [VirtualBox](https://www.virtualbox.org)
 
-* [Vagrant 1.1+](http://vagrantup.com) (not a Ruby gem)
+* [Vagrant](http://vagrantup.com)
 
 ## How To Build The Virtual Machine
 
 Building the virtual machine is this easy:
 
-    host $ git clone https://github.com/rails/rails-dev-box.git
+    host $ git clone https://github.com/makersquare/rails-dev-box.git
     host $ cd rails-dev-box
     host $ vagrant up
 
@@ -37,19 +35,17 @@ Port 3000 in the host computer is forwarded to port 3000 in the virtual machine.
 
 * RBENV
 
-* Ruby 2.0.0-p247
+* Ruby 2.1.0
 
 * Bundler
 
-* SQLite3, MySQL, and Postgres
+* SQLite3 and Postgres
 
-* System dependencies for nokogiri, sqlite3, mysql, mysql2, and pg
+* System dependencies for nokogiri, sqlite3, and pg
 
 * Databases and users needed to run the Active Record test suite
 
 * Node.js for the asset pipeline
-
-* Memcached
 
 ## Recommended Workflow
 
@@ -108,6 +104,10 @@ Finally, to completely wipe the virtual machine from the disk **destroying all i
     host $ vagrant destroy # DANGER: all is gone
 
 Please check the [Vagrant documentation](http://docs.vagrantup.com/v2/) for more information on Vagrant.
+
+## Gratitude
+
+Modified from the [Rails Dev Box](https://github.com/rails/rails-dev-box) provided by the Rails team.
 
 ## License
 
