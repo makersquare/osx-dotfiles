@@ -76,6 +76,15 @@ package { 'git-core':
   ensure => installed
 }
 
+package { 'vim':
+  ensure => installed
+}
+
+# rmagick dependencies.
+package { 'libmagickwand-dev':
+  ensure => installed
+}
+
 # Nokogiri dependencies.
 package { ['libxml2', 'libxml2-dev', 'libxslt1-dev']:
   ensure => installed

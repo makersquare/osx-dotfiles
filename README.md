@@ -4,6 +4,7 @@
 
 This project automates the setup of a development environment for MakerSquare students. Use this virtual machine to work on a pull request with everything ready to hack and run the test suites.
 
+
 ## Requirements
 
 * [VirtualBox](https://www.virtualbox.org)
@@ -104,6 +105,19 @@ Finally, to completely wipe the virtual machine from the disk **destroying all i
     host $ vagrant destroy # DANGER: all is gone
 
 Please check the [Vagrant documentation](http://docs.vagrantup.com/v2/) for more information on Vagrant.
+
+## FAQ
+
+### What is the purpose of Vagrant?
+Best described in this response [here](http://www.reddit.com/r/rails/comments/1w7sid/whats_the_purpose_of_vagrant/).
+
+### How would I build a new base box?
+
+Check out this blog post [here](http://tylerbird.com/blog/2014/01/27/building-a-vagrant-box-from-start-to-finish/).
+
+### I don't understand Puppet, what does it do?
+
+Puppet allows you to script a reliable method of installing development dependencies on a system. This process is called provisioning. You can read more about how Puppet works [here](http://docs.puppetlabs.com/).
 
 ## Gratitude
 
