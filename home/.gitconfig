@@ -5,8 +5,3 @@
 [core]
         excludesfile = ~/.gitignore
         editor = subl -w
-[user]
-        name = MakerSquare Student
-        email = students@themakersquare.com
-[merge]
-        tool = opendiff
