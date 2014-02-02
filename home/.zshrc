@@ -58,4 +58,4 @@ unsetopt correct_all
 unsetopt correct
 
 # Customize to your needs...
-export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/bin:/usr/local/bin:/Users/student/Dropbox/bin
+export PATH=/usr/bin:/bin:/usr/sbin:/sbin:$HOME/bin:/usr/local/bin:$PATH
