@@ -41,9 +41,18 @@
     if [ -f /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl ]; then
       echo "Creating subl link to Sublime Text 2"
       ln -s /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl ~/bin/subl
+      rm -f ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/User/Preferences.sublime-settings
+      ln -s ~/dotfiles/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/User/Preferences.sublime-settings
+    elif [ -f /Applications/Sublime\ Text\ 3.app/Contents/SharedSupport/bin/subl ]; then
+      echo "Creating subl link to Sublime Text 3"
+      ln -s /Applications/Sublime\ Text\ 3.app/Contents/SharedSupport/bin/subl ~/bin/subl
+      rm -f ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings
+      ln -s ~/dotfiles/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings
     elif [ -f /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl ]; then
       echo "Creating subl link to Sublime Text"
       ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl ~/bin/subl
+      rm -f ~/Library/Application\ Support/Sublime\ Text/Packages/User/Preferences.sublime-settings
+      ln -s ~/dotfiles/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text/Packages/User/Preferences.sublime-settings
     else
       echo "Install Sublime Text first"
     fi
