@@ -6,6 +6,7 @@ ZSH=$HOME/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="nanotech"
+DEFAULT_USER=vagrant
 
 # Set some pretty colors for LS.
 export LSCOLORS="FxGxBxDxCxEgEdxbxgxcxd"

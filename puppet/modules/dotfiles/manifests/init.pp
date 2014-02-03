@@ -23,7 +23,11 @@ class dotfiles {
     mode      => '0766'
   }
 
-  file { '/home/vagrant/.bundler/config':
+  file { '/home/vagrant/.bundle':
+    ensure    => directory
+  }
+
+  file { '/home/vagrant/.bundle/config':
     ensure    => file,
     content   => template('dotfiles/config'),
     mode      => '0766'

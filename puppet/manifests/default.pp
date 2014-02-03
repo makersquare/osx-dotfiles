@@ -100,6 +100,10 @@ package { 'zsh':
   ensure => installed
 }
 
+# --- Configuration Files ---------------------------------------------------------------------
+
+class { 'dotfiles': }
+
 # --- Ruby ---------------------------------------------------------------------
 
 class { 'rbenv': install_dir => "${home}/.rbenv" }
@@ -109,6 +113,8 @@ rbenv::build { '2.1.0': global => true }
 rbenv::gem { 'rails': ruby_version => '2.1.0' }
 rbenv::gem { 'pry': ruby_version => '2.1.0' }
 rbenv::gem { 'hirb': ruby_version => '2.1.0' }
+rbenv::gem { 'rmagick': ruby_version => '2.1.0' }
+rbenv::gem { 'nokogiri': ruby_version => '2.1.0' }
 
 # --- Node ---------------------------------------------------------------------
 
@@ -119,7 +125,3 @@ apt::ppa { 'ppa:chris-lea/node.js': }
 
 class { 'ohmyzsh': }
 ohmyzsh::install { 'vagrant': }
-
-# --- Configuration Files ---------------------------------------------------------------------
-
-class { 'dotfiles': }
