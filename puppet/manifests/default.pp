@@ -106,11 +106,20 @@ class { 'rbenv': install_dir => "${home}/.rbenv" }
 
 rbenv::plugin { ['sstephenson/ruby-build', 'rkh/rbenv-update', 'sstephenson/rbenv-gem-rehash']: }
 rbenv::build { '2.1.0': global => true }
-rbenv::gem { 'bundle': ruby_version => '2.1.0' }
+rbenv::gem { 'rails': ruby_version => '2.1.0' }
+rbenv::gem { 'pry': ruby_version => '2.1.0' }
+rbenv::gem { 'hirb': ruby_version => '2.1.0' }
+
+# --- Node ---------------------------------------------------------------------
 
 class { 'apt': }
 apt::ppa { 'ppa:chris-lea/node.js': }
 
+# --- Zsh and Oh-My-Zsh ---------------------------------------------------------------------
+
 class { 'ohmyzsh': }
 ohmyzsh::install { 'vagrant': }
 
+# --- Configuration Files ---------------------------------------------------------------------
+
+class { 'dotfiles': }

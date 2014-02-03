@@ -33,13 +33,6 @@ define ohmyzsh::install() {
     require => [Package['git'], Package['zsh']]
   }
 
-  exec { 'ohmyzsh::cp .zshrc':
-    creates => "/home/${name}/.zshrc",
-    command => "/bin/cp /home/${name}/.oh-my-zsh/templates/zshrc.zsh-template /home/${name}/.zshrc",
-    user    => $name,
-    require => Exec['ohmyzsh::git clone'],
-  }
-
   user { "ohmyzsh::user ${name}":
     ensure  => present,
     name    => $name,

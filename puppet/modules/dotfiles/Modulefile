@@ -1,0 +1,11 @@
+name    'dotfiles'
+version '1.0.0'
+source 'https://github.com/makersquare/vagrant-dotfiles'
+author 'truffaut'
+summary 'dotfiles module'
+description 'This is the dotfiles module. It installs dotfiles for a user'
+project_page 'https://github.com/makersquare/vagrant-dotfiles'
+
+## Add dependencies, if any:
+# dependency 'username/name', '>= 1.2.0'
+dependency 'puppetlabs/stdlib', '>= 2.3.1'
