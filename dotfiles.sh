@@ -9,5 +9,12 @@
     do
       ln -s "$f" "$HOME/${f##*/}"
     done
+
+  
+  fi
+
+  if [ ! -d "~/Library/Fonts" ]; then
+    mkdir -p ~/Library/Fonts
+    curl https://gist.github.com/qrush/1595572/raw/417a3fa36e35ca91d6d23ac961071094c26e5fad/Menlo-Powerline.otf > ~/Library/Fonts/Menlo-Powerline.otf
   fi
 }
