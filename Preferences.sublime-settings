@@ -5,5 +5,16 @@
   "translate_tabs_to_spaces": true,
   "trim_trailing_white_space_on_save": true,
   "highlight_line": true,
-  "save_on_focus_lost": true
+  "save_on_focus_lost": true,
+  "file_exclude_patterns":
+  [
+    ".DS_Store"
+  ],
+  "folder_exclude_patterns":
+  [
+    ".bundle",
+    ".git",
+    ".sass-cache",
+    "vendor/bundle/gems"
+  ]
 }
