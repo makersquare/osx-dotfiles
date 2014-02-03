@@ -1,9 +1,12 @@
+**STUDENTS: go [here first](https://github.com/makersquare/student-dev-box/wiki/Setting-up-your-dev-environment)**
+
+**INSTRUCTORS: For updating/changing the Virtual Machine for future classes, read below:**
+
 # A Virtual Machine for MakerSquare Student Development
 
 ## Introduction
 
 This project automates the setup of a development environment for MakerSquare students. Use this virtual machine to work on a pull request with everything ready to hack and run the test suites.
-
 
 ## Requirements
 
@@ -15,8 +18,8 @@ This project automates the setup of a development environment for MakerSquare st
 
 Building the virtual machine is this easy:
 
-    host $ git clone https://github.com/makersquare/rails-dev-box.git
-    host $ cd rails-dev-box
+    host $ git clone https://github.com/makersquare/student-dev-box.git
+    host $ cd student-dev-box
     host $ vagrant up
 
 That's it.
