@@ -26,6 +26,8 @@
       ln -s "$f" "$HOME/${f##*/}"
     done
 
+    echo "DEFAULT_USER=`whoami`" >> .zshrc
+
   else
     echo "updating Dotfiles"
     cd ~/dotfiles
