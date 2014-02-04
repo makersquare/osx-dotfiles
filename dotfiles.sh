@@ -28,8 +28,10 @@
 
   else
     echo "updating Dotfiles"
-    git -C ~/dotfiles stash
-    git -C ~/dotfiles pull origin master
+    cd ~/dotfiles
+    git stash
+    git pull origin master
+    cd ~
   fi
 
   if [ ! -d ~/bin ]; then
@@ -65,24 +67,25 @@
     echo "making ~/Library/Fonts"
     mkdir -p ~/Library/Fonts
 
-    if [ ! -f ~/Library/Fonts/Menlo-Powerline.otf ]; then
+    if [ ! -f ~/Library/Fonts/Meslo+LG+M+DZ+Regular+for+Powerline.otf ]; then
       echo "adding font for terminal"
-      curl https://gist.github.com/qrush/1595572/raw/417a3fa36e35ca91d6d23ac961071094c26e5fad/Menlo-Powerline.otf > ~/Library/Fonts/Menlo-Powerline.otf
+      curl https://github.com/Lokaltog/powerline-fonts/raw/master/Meslo/Meslo%20LG%20M%20DZ%20Regular%20for%20Powerline.otf > ~/Library/Fonts/Meslo+LG+M+DZ+Regular+for+Powerline.otf
     fi
   else
-    if [ ! -f ~/Library/Fonts/Menlo-Powerline.otf ]; then
+    if [ ! -f ~/Library/Fonts/Meslo+LG+M+DZ+Regular+for+Powerline.otf ]; then
       echo "adding font for terminal"
-      curl https://gist.github.com/qrush/1595572/raw/417a3fa36e35ca91d6d23ac961071094c26e5fad/Menlo-Powerline.otf > ~/Library/Fonts/Menlo-Powerline.otf
+      curl https://github.com/Lokaltog/powerline-fonts/raw/master/Meslo/Meslo%20LG%20M%20DZ%20Regular%20for%20Powerline.otf > ~/Library/Fonts/Meslo+LG+M+DZ+Regular+for+Powerline.otf
     fi
   fi
 
-  if [ -d ~/code ]; then
-    mv ~/code ~/old_code_backup
+  if [ -d ~/code/mks ]; then
+    mv ~/code/mks ~/mks_backup
   fi
-  mkdir ~/code
-  mkdir ~/code/frontend
-  mkdir ~/code/backend
-  mkdir ~/code/misc
 
-  cp ~/dotfiles/Vagrantfile ~/code/Vagrantfile
+  mkdir ~/code/mks
+  mkdir ~/code/mks/frontend
+  mkdir ~/code/mks/backend
+  mkdir ~/code/mks/misc
+
+  cp ~/dotfiles/Vagrantfile ~/code/mks/Vagrantfile
 }
