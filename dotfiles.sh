@@ -7,15 +7,15 @@
     git clone https://github.com/makersquare/osx-dotfiles.git ~/.dotfiles
 
     echo "cleaning up old dotfiles"
-    if [ -f ~/.gitignore || -h ~/.gitignore ]; then
+    if [ -f ~/.gitignore ] || [ -h ~/.gitignore ]; then
       rm -f ~/.gitignore
     fi
 
-    if [ -f ~/.gitconfig || -h ~/.gitconfig ]; then
+    if [ -f ~/.gitconfig ] || [ -h ~/.gitconfig ]; then
       rm -rf ~/.gitconfig
     fi
 
-    if [ -f ~/.zshrc || -h ~/.zshrc ]; then
+    if [ -f ~/.zshrc ] || [ -h ~/.zshrc ]; then
       echo "existing .zshrc detected, renaming .old-zshrc"
       mv ~/.zshrc ~/.old-zshrc
     fi
