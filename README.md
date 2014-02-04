@@ -1,6 +1,6 @@
 #STUDENTS: go [here first](https://github.com/makersquare/student-dev-box/wiki/Setting-up-your-dev-environment)
 
-##INSTRUCTORS: For updating/changing the Virtual Machine for future classes, read CONTRIBUTING.md
+INSTRUCTORS: For updating/changing the Virtual Machine for future classes, read CONTRIBUTING.md
 
 ## Gratitude
 
