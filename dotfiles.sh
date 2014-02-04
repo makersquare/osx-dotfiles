@@ -69,21 +69,6 @@
     fi
   fi
 
-  if [ ! -d ~/Library/Fonts ]; then
-    echo "making ~/Library/Fonts"
-    mkdir -p ~/Library/Fonts
-
-    if [ ! -f ~/Library/Fonts/Meslo+LG+M+DZ+Regular+for+Powerline.otf ]; then
-      echo "adding font for terminal"
-      curl https://github.com/Lokaltog/powerline-fonts/raw/master/Meslo/Meslo%20LG%20M%20DZ%20Regular%20for%20Powerline.otf > ~/Library/Fonts/Meslo+LG+M+DZ+Regular+for+Powerline.otf
-    fi
-  else
-    if [ ! -f ~/Library/Fonts/Meslo+LG+M+DZ+Regular+for+Powerline.otf ]; then
-      echo "adding font for terminal"
-      curl https://github.com/Lokaltog/powerline-fonts/raw/master/Meslo/Meslo%20LG%20M%20DZ%20Regular%20for%20Powerline.otf > ~/Library/Fonts/Meslo+LG+M+DZ+Regular+for+Powerline.otf
-    fi
-  fi
-
   if [ -d ~/code/mks ]; then
     mv ~/code/mks ~/code/mks_backup
   fi
