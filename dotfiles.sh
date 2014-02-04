@@ -2,26 +2,30 @@
 {
   echo "This script will download and link your dotfiles for you."
 
-  if [ ! -d ~/dotfiles ]; then
-    mkdir ~/dotfiles
-    git clone https://github.com/makersquare/osx-dotfiles.git ~/dotfiles
+  if [ ! -d ~/.dotfiles ]; then
+    mkdir ~/.dotfiles
+    git clone https://github.com/makersquare/osx-dotfiles.git ~/.dotfiles
 
     echo "cleaning up old dotfiles"
-    if [ -f ~/.gitignore ]; then
+    if [ -f ~/.gitignore || -h ~/.gitignore ]; then
       rm -f ~/.gitignore
     fi
 
-    if [ -f ~/.gitconfig ]; then
+    if [ -f ~/.gitconfig || -h ~/.gitconfig ]; then
       rm -rf ~/.gitconfig
     fi
 
-    if [ -f ~/.zshrc ]; then
+    if [ -f ~/.zshrc || -h ~/.zshrc ]; then
       echo "existing .zshrc detected, renaming .old-zshrc"
       mv ~/.zshrc ~/.old-zshrc
     fi
 
+    if [ -d ~/.homesick ]; then
+      rm -rf ~/.homesick
+    fi
+
     echo "symlinking dotfiles to your home directory"
-    for f in ~/dotfiles/home/.[^.]*
+    for f in ~/.dotfiles/home/.[^.]*
     do
       ln -s "$f" "$HOME/${f##*/}"
     done
@@ -30,7 +34,7 @@
 
   else
     echo "updating Dotfiles"
-    cd ~/dotfiles
+    cd ~/.dotfiles
     git stash
     git pull origin master
     cd ~
@@ -46,7 +50,7 @@
       echo "Creating subl link to Sublime Text 2"
       ln -s /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl ~/bin/subl
       rm -f ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/User/Preferences.sublime-settings
-      ln -s ~/dotfiles/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/User/Preferences.sublime-settings
+      ln -s ~/.dotfiles/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/User/Preferences.sublime-settings
       if [ ! -d ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/flatland-mks ]; then
         git clone https://github.com/makersquare/flatland-mks.git ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/flatland-mks
       fi
@@ -54,7 +58,7 @@
       echo "Creating subl link to Sublime Text 3"
       ln -s /Applications/Sublime\ Text\ 3.app/Contents/SharedSupport/bin/subl ~/bin/subl
       rm -f ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings
-      ln -s ~/dotfiles/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings
+      ln -s ~/.dotfiles/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings
       if [ ! -d ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/flatland-mks ]; then
         git clone https://github.com/makersquare/flatland-mks.git ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/flatland-mks
       fi
@@ -62,7 +66,7 @@
       echo "Creating subl link to Sublime Text"
       ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl ~/bin/subl
       rm -f ~/Library/Application\ Support/Sublime\ Text/Packages/User/Preferences.sublime-settings
-      ln -s ~/dotfiles/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text/Packages/User/Preferences.sublime-settings
+      ln -s ~/.dotfiles/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text/Packages/User/Preferences.sublime-settings
       if [ ! -d ~/Library/Application\ Support/Sublime\ Text/Packages/flatland-mks ]; then
         git clone https://github.com/makersquare/flatland-mks.git ~/Library/Application\ Support/Sublime\ Text/Packages/flatland-mks
       fi
@@ -79,5 +83,5 @@
   mkdir ~/code/mks/backend
   mkdir ~/code/mks/misc
 
-  cp ~/dotfiles/Vagrantfile ~/code/mks/Vagrantfile
+  cp ~/.dotfiles/Vagrantfile ~/code/mks/Vagrantfile
 }
