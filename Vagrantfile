@@ -8,5 +8,6 @@ Vagrant.configure('2') do |config|
   end
 
   config.vm.network "private_network", ip: "10.10.10.10"
+  config.vm.network "forwarded_port", guest: 8000, host: 8000
   config.vm.synced_folder ".", "/vagrant", type: "nfs"
 end
