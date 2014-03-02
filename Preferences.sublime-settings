@@ -6,8 +6,6 @@
   "trim_trailing_white_space_on_save": true,
   "highlight_line": true,
   "save_on_focus_lost": true,
-  "color_scheme": "Packages/flatland-mks/Flatland-MKS.tmTheme",
-  "theme": "flatland-mks.sublime-theme",
   "file_exclude_patterns":
   [
     ".DS_Store"
