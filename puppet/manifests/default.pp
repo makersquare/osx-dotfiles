@@ -1,4 +1,3 @@
-$ar_databases = ['activerecord_unittest', 'activerecord_unittest2']
 $as_vagrant   = 'sudo -u vagrant -H bash -l -c'
 $home         = '/home/vagrant'
 
@@ -34,15 +33,10 @@ class install_postgres {
 
   class { 'postgresql::server': }
 
-  pg_database { $ar_databases:
-    ensure   => present,
-    encoding => 'UTF8',
-    require  => Class['postgresql::server']
-  }
-
   pg_user { 'rails':
-    ensure  => present,
-    require => Class['postgresql::server']
+    ensure   => present,
+    createdb => true,
+    require  => Class['postgresql::server']
   }
 
   pg_user { 'vagrant':
