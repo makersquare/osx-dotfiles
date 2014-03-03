@@ -101,14 +101,14 @@ class { 'dotfiles': }
 # --- Ruby ---------------------------------------------------------------------
 
 class { 'rbenv': install_dir => "${home}/.rbenv" }
+$rubyver = '2.1.1'
 
 rbenv::plugin { ['sstephenson/ruby-build', 'rkh/rbenv-update', 'sstephenson/rbenv-gem-rehash']: }
-rbenv::build { '2.1.0': global => true }
-rbenv::gem { 'rails': ruby_version => '2.1.0' }
-rbenv::gem { 'pry': ruby_version => '2.1.0' }
-rbenv::gem { 'hirb': ruby_version => '2.1.0' }
-rbenv::gem { 'rmagick': ruby_version => '2.1.0' }
-rbenv::gem { 'nokogiri': ruby_version => '2.1.0' }
+rbenv::build { $rubyver: global => true }
+rbenv::gem { 'pry': ruby_version => $rubyver }
+rbenv::gem { 'hirb': ruby_version => $rubyver }
+rbenv::gem { 'rmagick': ruby_version => $rubyver }
+rbenv::gem { 'nokogiri': ruby_version => $rubyver }
 
 # --- Node ---------------------------------------------------------------------
 
