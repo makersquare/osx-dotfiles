@@ -79,6 +79,10 @@ package { 'libmagickwand-dev':
   ensure => installed
 }
 
+package { 'imagemagick':
+  ensure => installed
+}
+
 # Nokogiri dependencies.
 package { ['libxml2', 'libxml2-dev', 'libxslt1-dev']:
   ensure => installed
