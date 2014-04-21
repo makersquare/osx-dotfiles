@@ -57,5 +57,6 @@ source $ZSH/oh-my-zsh.sh
 unsetopt correct_all
 unsetopt correct
 
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 # Customize to your needs...
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/bin:$PATH
