@@ -2,9 +2,9 @@
 {
   echo "This script will download and link your dotfiles for you."
 
-  if [ ! -d ~/.dotfiles ]; then
-    mkdir ~/.dotfiles
-    git clone https://github.com/makersquare/osx-dotfiles.git ~/.dotfiles
+  if [ ! -d ~/.mks-dotfiles ]; then
+    mkdir ~/.mks-dotfiles
+    git clone https://github.com/makersquare/osx-dotfiles.git ~/.mks-dotfiles
 
     echo "cleaning up old dotfiles"
     if [ -f ~/.gitignore ] || [ -h ~/.gitignore ]; then
@@ -34,7 +34,7 @@
 
   else
     echo "updating Dotfiles"
-    cd ~/.dotfiles
+    cd ~/.mks-dotfiles
     git stash
     git pull origin master
     cd ~
