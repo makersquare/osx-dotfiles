@@ -3,3 +3,5 @@
 [core]
         excludesfile = ~/.gitignore
         editor = subl -w
+[merge]
+	tool = opendiff
