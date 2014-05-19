@@ -2,6 +2,6 @@
         ui = true
 [core]
         excludesfile = ~/.gitignore
-        editor = subl -w
+        editor = subl -n -w
 [merge]
 	tool = opendiff
