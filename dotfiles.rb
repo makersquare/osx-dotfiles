@@ -21,11 +21,15 @@ end
 
 #prompt the user for git user name and password and set them globally
 def get_git_info
-  puts "Input the email address to use with Git"
-  git_email = gets.chomp
+  ohai "You'll now input your information to use with Git"
 
-  puts "Input your full name for use with Git"
+  puts "Input your full name to identify your Git commits (e.g. Jane Doe)"
+  print "> "
   git_name = gets.chomp
+
+  puts "Input the email address to identify your Git commits (e.g. jane@makersquare.com)"
+  print "> "
+  git_email = gets.chomp
 
   %x( git config --global user.name "#{git_name}" )
   %x( git config --global user.email #{git_email} )
