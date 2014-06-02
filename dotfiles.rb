@@ -41,7 +41,7 @@ def dot_file_replace
       backup_dir = "#{DOT_DIR}/backups/#{Time.now.strftime("%Y%m%d")}"
       FileUtils.mkdir_p(backup_dir) unless File.exists?(backup_dir)
       FileUtils.mv(dot_file_location, backup_dir) unless File.exists?("#{backup_dir}/#{dot_file}")
-      FileUtils.ln_s("#{DOT_DIR}/home/#{dot_file}", dot_file_location)
+      FileUtils.ln_sf("#{DOT_DIR}/home/#{dot_file}", dot_file_location)
     end
   end
 end
