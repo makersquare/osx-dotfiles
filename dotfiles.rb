@@ -14,6 +14,7 @@ BREW_ZSH = '/usr/local/bin/zsh'
 # this is for the purpose of hiding the username with the oh-my-zsh powerline theme
 # see agnoster theme: https://github.com/robbyrussell/oh-my-zsh/wiki/themes
 def set_default_user
+  ohai "Setting DEFAULT_USER env variable..."
   open("#{HOME_DIR}/.zshrc", 'a') do |f|
     f.puts "DEFAULT_USER=#{USERNAME}"
   end
@@ -37,55 +38,78 @@ end
 
 # backup old dotfiles, symlink new dotfiles to ~/
 def dot_file_replace
+  ohai "Symlinking dotfiles..."
   DOT_FILES.each do |dot_file|
     dot_file_location = File.expand_path("~/#{dot_file}")
     unless File.exists?(dot_file_location)
       # symlink the file from DOT_DIR to HOME_DIR
       FileUtils.ln_s("#{DOT_DIR}/home/#{dot_file}", dot_file_location)
+      puts "Symlinked #{dot_file} to ~/ successfully"
     else
-      # move file to ~/.mks-dotfiles/backups/timestamp
       backup_dir = "#{DOT_DIR}/backups/#{Time.now.strftime("%Y%m%d")}"
+      puts "Existing #{dot_file} detected in ~/, backing it up to #{backup_dir}"
       FileUtils.mkdir_p(backup_dir) unless File.exists?(backup_dir)
-      FileUtils.mv(dot_file_location, backup_dir) unless File.exists?("#{backup_dir}/#{dot_file}")
+
+      unless File.exists?("#{backup_dir}/#{dot_file}")
+        FileUtils.mv(dot_file_location, backup_dir)
+        puts "Backup #{dot_file} created in #{backup_dir}."
+      else
+        puts "Backup #{dot_file} already created for today, skipping backup for this file."
+      end
+
       FileUtils.ln_sf("#{DOT_DIR}/home/#{dot_file}", dot_file_location)
+      puts "Symlinked #{dot_file} to ~/ successfully"
+
     end
   end
 end
 
 # Create 'subl' shortcut for ST2 or ST3
 def check_subl
+  ohai "Checking for existence of subl shortcut."
   unless find_executable('subl')
     FileUtils.mkdir("#{HOME_DIR}/bin") unless File.exists?("#{HOME_DIR}/bin")
     if File.exists?("/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl")
+      puts "Creating subl shortcut for Sublime Text 3."
       FileUtils.ln_sf("/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl", "#{HOME_DIR}/bin/subl")
     elsif File.exists?("/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl")
-      puts "Sublime Text 3 not installed, creating shortcut to Sublime Text 2 instead"
+      puts "Sublime Text 3 not installed, creating subl shortcut to Sublime Text 2 instead"
       FileUtils.ln_sf("/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl", "#{HOME_DIR}/bin/subl")
     else
-      puts "No Sublime Text versions installed, install Sublime Text and re-run this script to create the shortcut"
+      puts "No Sublime Text versions installed, install Sublime Text and re-run this script to create the subl shortcut"
     end
+  else
+    puts "subl shortcut already exists, moving on."
   end
 end
 
 def check_ohmyzsh
+  ohai "Checking for existence of ~/.oh-my-zsh"
   unless File.exists?(File.expand_path('~/.oh-my-zsh'))
     `git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh`
+    puts "cloned .oh_my_zsh to ~/ successfully"
   else
     Dir.chdir(File.expand_path('~/.oh-my-zsh'))
     `git stash`
     `git pull --rebase --stat origin master`
     Dir.chdir(HOME_DIR)
+    puts "updated existing ~/.oh_my-zsh"
   end
 end
 
 def check_zsh
+  ohai "Checking if ZSH is the current shell..."
   shell = `echo $SHELL`.chomp
   unless shell == BREW_ZSH
+    puts "Current shell is not Brew's ZSH..."
     shell_list = File.readlines("/etc/shells")
     unless shell_list.include?(BREW_ZSH) || shell_list.include?(BREW_ZSH+"\n")
+      puts "Adding Brew's ZSH to /etc/shells, this will require user's password"
       sudo "/bin/sh", "-c", "echo #{BREW_ZSH} >> /etc/shells"
     end
     %x( chsh -s #{BREW_ZSH} )
+  else
+    puts "Already using correct ZSH, moving on."
   end
 end
 
@@ -167,7 +191,7 @@ puts "Creating ~/code/mks directory"
 FileUtils.mkdir_p(MKS_DIR) unless File.exists?(MKS_DIR)
 
 ohai "This script will now attempt to setup your shell configuration."
-puts "Only attempt this step if you're connected to the internet."
+puts "Only continue if you're connected to the internet."
 wait_for_user
 
 #check for existence of ~/.mks-dotfiles
@@ -199,7 +223,6 @@ unless File.exists?(DOT_DIR)
 
   # set the shell
   %x( chsh -s #{BREW_ZSH} )
-  ohai "Congratulations, you're all finished! Open a new shell window to see what we've accomplished!"
 else
   Dir.chdir(DOT_DIR)
   `git stash`
@@ -218,5 +241,7 @@ else
   # check that oh_my_zsh exists, change if not
   check_ohmyzsh
 end
+
+ohai "Congratulations, you're all finished! Go ahead, open a new shell window!"
 
 
