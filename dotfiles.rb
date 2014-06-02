@@ -74,10 +74,10 @@ end
 
 def check_zsh
   brew_zsh = '/usr/local/bin/zsh'
-  shell = `echo $SHELL`
+  shell = `echo $SHELL`.chomp
   unless shell == brew_zsh
     shell_list = File.readlines("/etc/shells")
-    unless shell_list.include?(shell) || shell_list.include?(shell+"\n")
+    unless shell_list.include?(brew_zsh) || shell_list.include?(brew_zsh+"\n")
       sudo "/bin/sh", "-c", "echo #{brew_zsh} >> /etc/shells"
     end
     %x( chsh -s #{brew_zsh} )
