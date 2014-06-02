@@ -81,6 +81,7 @@ def check_subl
   else
     puts "subl shortcut already exists, moving on."
   end
+  FileUtils.rm("#{HOME_DIR}/mkmf.log") if File.exists?("#{HOME_DIR}/mkmf.log")
 end
 
 def check_ohmyzsh
