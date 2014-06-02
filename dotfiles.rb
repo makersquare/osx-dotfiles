@@ -51,10 +51,10 @@ def check_subl
   unless find_executable('subl')
     FileUtils.mkdir("#{HOME_DIR}/bin") unless File.exists?("#{HOME_DIR}/bin")
     if File.exists?("/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl")
-      FileUtils.ln_s("/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl", "#{HOME_DIR}/bin/subl")
+      FileUtils.ln_sf("/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl", "#{HOME_DIR}/bin/subl")
     elsif File.exists?("/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl")
       puts "Sublime Text 3 not installed, creating shortcut to Sublime Text 2 instead"
-      FileUtils.ln_s("/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl", "#{HOME_DIR}/bin/subl")
+      FileUtils.ln_sf("/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl", "#{HOME_DIR}/bin/subl")
     else
       puts "No Sublime Text versions installed, install Sublime Text and re-run this script to create the shortcut"
     end
