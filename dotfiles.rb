@@ -8,6 +8,8 @@ HOME_DIR = File.expand_path('~/')
 DOT_DIR = File.expand_path('~/.mks-dotfiles')
 MKS_DIR = File.expand_path('~/code/mks')
 DOT_FILES = ['.gitignore', '.gitconfig', '.zshrc']
+BREW_ZSH = '/usr/local/bin/zsh'
+
 
 # this is for the purpose of hiding the username with the oh-my-zsh powerline theme
 # see agnoster theme: https://github.com/robbyrussell/oh-my-zsh/wiki/themes
@@ -73,14 +75,13 @@ def check_ohmyzsh
 end
 
 def check_zsh
-  brew_zsh = '/usr/local/bin/zsh'
   shell = `echo $SHELL`.chomp
-  unless shell == brew_zsh
+  unless shell == BREW_ZSH
     shell_list = File.readlines("/etc/shells")
-    unless shell_list.include?(brew_zsh) || shell_list.include?(brew_zsh+"\n")
-      sudo "/bin/sh", "-c", "echo #{brew_zsh} >> /etc/shells"
+    unless shell_list.include?(BREW_ZSH) || shell_list.include?(BREW_ZSH+"\n")
+      sudo "/bin/sh", "-c", "echo #{BREW_ZSH} >> /etc/shells"
     end
-    %x( chsh -s #{brew_zsh} )
+    %x( chsh -s #{BREW_ZSH} )
   end
 end
 
@@ -193,7 +194,7 @@ unless File.exists?(DOT_DIR)
   # set their powerline font
 
   # set the shell
-  %x( chsh -s #{brew_zsh} )
+  %x( chsh -s #{BREW_ZSH} )
   ohai "Congratulations, you're all finished! Open a new shell window to see what we've accomplished!"
 else
   Dir.chdir(DOT_DIR)
