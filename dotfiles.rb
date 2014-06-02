@@ -39,7 +39,7 @@ def dot_file_replace
     else
       # move file to ~/.mks-dotfiles/backups/timestamp
       backup_dir = "#{DOT_DIR}/backups/#{Time.now.strftime("%Y%m%d")}"
-      FileUtils.mkdir(backup_dir) unless File.exists?(backup_dir)
+      FileUtils.mkdir_p(backup_dir) unless File.exists?(backup_dir)
       FileUtils.mv(dot_file_location, backup_dir)
       FileUtils.ln_s("#{DOT_DIR}/home/#{dot_file}", dot_file_location)
     end
