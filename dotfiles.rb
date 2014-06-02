@@ -66,6 +66,7 @@ def check_ohmyzsh
     `git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh`
   else
     Dir.chdir(File.expand_path('~/.oh-my-zsh'))
+    `git stash`
     `git pull --rebase --stat origin master`
     Dir.chdir(HOME_DIR)
   end
@@ -169,7 +170,6 @@ unless File.exists?(DOT_DIR)
   # git clone dotfiles
   `git clone https://github.com/makersquare/osx-dotfiles ~/.mks-dotfiles`
 
-  check_ohmyzsh
 
   #do something with old .gitignore/.gitconfig/.zshrc
   #if there are existing dotfiles, move them to ~/.mks-dotfiles/backup/timestamp
@@ -185,6 +185,8 @@ unless File.exists?(DOT_DIR)
 
   #add homebrew zsh to /etc/shells
   check_zsh
+
+  check_ohmyzsh
 
   # set their subl settings
   check_subl
