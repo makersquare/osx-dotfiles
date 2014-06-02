@@ -1,6 +1,6 @@
 Vagrant.configure('2') do |config|
-  config.vm.box      = 'mks3'
-  config.vm.box_url  = 'https://s3.amazonaws.com/makersquare-environment/mks3.box'
+  config.vm.box      = 'mks4'
+  config.vm.box_url  = 'https://s3.amazonaws.com/makersquare-environment/mks4.box'
   config.vm.hostname = 'student-dev-box'
 
   config.vm.provider "virtualbox" do |v|
