@@ -57,6 +57,7 @@ source $ZSH/oh-my-zsh.sh
 # Don't autocorrect my commands.
 unsetopt correct_all
 unsetopt correct
+unsetopt nomatch
 
 # Customize to your needs...
 export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/bin:$HOME/.rbenv/bin:/usr/local/bin
