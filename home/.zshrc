@@ -56,6 +56,7 @@ source $ZSH/oh-my-zsh.sh
 # Don't autocorrect my commands.
 unsetopt correct_all
 unsetopt correct
+unsetopt nomatch
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 # Customize to your needs...
