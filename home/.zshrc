@@ -15,6 +15,8 @@ export EDITOR="subl -w"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias rm="rm -i"
+alias ls="ls -aFG"
+alias ll="ls -alFG"
 
 # usage:
 # $ server
