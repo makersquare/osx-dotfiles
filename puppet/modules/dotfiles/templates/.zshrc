@@ -62,4 +62,4 @@ unsetopt nomatch
 # Customize to your needs...
 export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/bin:$HOME/.rbenv/bin:/usr/local/bin
 eval "$(rbenv init -)"
-cd /vagrant
+cd /home/vagrant/code/mks

@@ -105,19 +105,29 @@ class { 'dotfiles': }
 # --- Ruby ---------------------------------------------------------------------
 
 class { 'rbenv': install_dir => "${home}/.rbenv" }
-$rubyver = '2.1.1'
+$rubyver = '2.0.0-p481'
 
 rbenv::plugin { ['sstephenson/ruby-build', 'rkh/rbenv-update', 'sstephenson/rbenv-gem-rehash']: }
 rbenv::build { $rubyver: global => true }
 rbenv::gem { 'pry': ruby_version => $rubyver }
 rbenv::gem { 'hirb': ruby_version => $rubyver }
-rbenv::gem { 'rmagick': ruby_version => $rubyver }
+rbenv::gem { 'mini_magick': ruby_version => $rubyver }
 rbenv::gem { 'nokogiri': ruby_version => $rubyver }
 
 # --- Node ---------------------------------------------------------------------
 
 class { 'apt': }
 apt::ppa { 'ppa:chris-lea/node.js': }
+
+# --- Symlink Dir Creation -----------------------------------------------------
+
+file { "/home/vagrant/code/":
+    ensure => "directory"
+}
+
+file { "/home/vagrant/code/mks/":
+    ensure => "directory"
+}
 
 # --- Zsh and Oh-My-Zsh ---------------------------------------------------------------------
 
