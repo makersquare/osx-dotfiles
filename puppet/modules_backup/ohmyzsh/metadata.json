@@ -1,0 +1,26 @@
+{
+  "name": "acme-ohmyzsh",
+  "version": "0.1.0",
+  "source": "https://github.com/acme/puppet-acme-oh-my-zsh",
+  "author": "acme",
+  "license": "Apache License, Version 2.0",
+  "summary": "ohmyzsh module",
+  "description": "This is the ohmyzsh module. It installs oh-my-zsh for a user and changes their shell to zsh",
+  "project_page": "https://github.com/acme/puppet-acme-oh-my-zsh",
+  "dependencies": [
+
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+    "LICENSE": "3b83ef96387f14655fc854ddc3c6bd57",
+    "Modulefile": "70b60d8af203a5bfcd7ddb09285013bb",
+    "README": "04f23e531496166e866ad24c22a994f4",
+    "Rakefile": "8a3c5b6dfcab55f3096f5ffed645de4a",
+    "manifests/init.pp": "1e3b6befe8ecaad44149dd9f9a4a31fd",
+    "manifests/install.pp": "08f8146605e81edb720c3863d1479185",
+    "spec/spec_helper.rb": "a55d1e6483344f8ec6963fcb2c220372",
+    "tests/init.pp": "f8cd0e8655ac062177bcbe705d74a1c2"
+  }
+}

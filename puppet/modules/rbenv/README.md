@@ -1,6 +1,6 @@
 # puppet-rbenv
 
-[![Build Status](https://travis-ci.org/justindowning/puppet-rbenv.png)](https://travis-ci.org/justindowning/puppet-rbenv)
+[![Puppet Forge](http://img.shields.io/puppetforge/v/jdowning/rbenv.svg)](https://forge.puppetlabs.com/jdowning/rbenv) [![Build Status](https://travis-ci.org/justindowning/puppet-rbenv.png)](https://travis-ci.org/justindowning/puppet-rbenv)
 
 ## Description
 This Puppet module will install and manage [rbenv](http://rbenv.org). By default, it installs
@@ -21,6 +21,13 @@ If you wish to install rbenv somewhere other than the default
 
     class { 'rbenv': install_dir => '/opt/rbenv' }
 
+You can also ensure rbenv is kept up-to-date:
+
+    class { 'rbenv':
+      install_dir => '/opt/rbenv'
+      latest      => true
+    }
+
 The class will merely setup rbenv on your host. If you wish to install
 rubies, plugins, or gems, you will have to add those declarations to your manifests
 as well.
@@ -28,9 +35,9 @@ as well.
 ### Installing Ruby using ruby-build
 Ruby requires additional packages to operate properly. Fortunately, this module
 will ensure these dependencies are met before installing Ruby. To install Ruby
-you will need the [ruby-build](https://github.com/sstephenson/ruby-build) plugin from @sstephenson. Once
-installed, you can install most any Ruby. Additionally, you can set the Ruby
-to be the global interpreter.
+you will need the [ruby-build](https://github.com/sstephenson/ruby-build) plugin
+from @sstephenson. Once installed, you can install most any Ruby. Additionally,
+you can set the Ruby to be the global interpreter.
 
     rbenv::plugin { 'sstephenson/ruby-build': }
     rbenv::build { '2.0.0-p247': global => true }
@@ -39,6 +46,11 @@ to be the global interpreter.
 Plugins can be installed from GitHub using the following definiton:
 
     rbenv::plugin { 'github_user/github_repo': }
+
+You can ensure a plugin is kept up-to-date. This is helpful for a plugin like
+`ruby-build` so that definitions are always available:
+
+    rbenv::plugin { 'sstephenson/ruby-build': latest => true }
 
 ## Gems
 Gems can be installed too! You *must* specify the `ruby_version` you want to
@@ -52,7 +64,7 @@ site.pp
     class { 'rbenv': }
     rbenv::plugin { [ 'sstephenson/rbenv-vars', 'sstephenson/ruby-build' ]: }
     rbenv::build { '2.0.0-p247': global => true }
-    rbenv::gem { 'thor': ruby_version   => '2.0.0-p247' }
+    rbenv::gem { 'thor': ruby_version => '2.0.0-p247' }
 
 ## Testing
 You can test this module with rspec:
@@ -63,12 +75,16 @@ You can test this module with rspec:
 ## Vagrant
 
 You can also test this module in a Vagrant box. There are two box definitons included in the
-Vagrant file for Debian and Redhat testing.
+Vagrant file for CentOS, Debian, and Ubuntu testing. You will need to use `librarian-puppet` to setup
+dependencies:
+
+    bundle install
+    bundle exec librarian-puppet install
 
 To test both boxes:
 
     vagrant up
 
-To test one ditribution:
+To test one distribution:
 
-    vagrant up [centos|suse|ubuntu]
+    vagrant up [centos|debian|ubuntu]

@@ -1,17 +1,29 @@
 require 'spec_helper'
 describe 'apt::ppa', :type => :define do
-  [ { :lsbdistrelease => '11.04',
+  [
+    {
+      :lsbdistrelease  => '11.04',
       :lsbdistcodename => 'natty',
-      :package => 'python-software-properties'},
-    { :lsbdistrelease => '12.10',
+      :operatingsystem => 'Ubuntu',
+      :lsbdistid       => 'Ubuntu',
+      :package         => 'python-software-properties'
+    },
+    {
+      :lsbdistrelease  => '12.10',
       :lsbdistcodename => 'quantal',
-      :package => 'software-properties-common'},
+      :operatingsystem => 'Ubuntu',
+      :lsbdistid       => 'Ubuntu',
+      :package         => 'software-properties-common'
+    },
   ].each do |platform|
     context "on #{platform[:lsbdistcodename]}" do
       let :facts do
         {
-          :lsbdistrelease => platform[:lsbdistrelease],
+          :lsbdistrelease  => platform[:lsbdistrelease],
           :lsbdistcodename => platform[:lsbdistcodename],
+          :operatingsystem => platform[:operatingsystem],
+          :lsbdistid       => platform[:lsbdistid],
+          :osfamily        => 'Debian',
         }
       end
       let :release do
@@ -46,7 +58,7 @@ describe 'apt::ppa', :type => :define do
           it { should contain_exec("add-apt-repository-#{t}").with(
             'command' => "/usr/bin/add-apt-repository #{options} #{t}",
             'unless'  => "/usr/bin/test -s /etc/apt/sources.list.d/#{filename}",
-            'require' => ["File[/etc/apt/sources.list.d]", "Package[#{package}]"],
+            'require' => ["File[sources.list.d]", "Package[#{package}]"],
             'notify'  => "Exec[apt_update]"
             )
           }
@@ -75,7 +87,7 @@ describe 'apt::ppa', :type => :define do
           'environment' => [],
           'command'     => "/usr/bin/add-apt-repository #{options} #{title}",
           'unless'      => "/usr/bin/test -s /etc/apt/sources.list.d/#{filename}",
-          'require'     => ["File[/etc/apt/sources.list.d]", "Package[#{package}]"],
+          'require'     => ["File[sources.list.d]", "Package[#{package}]"],
           'notify'      => "Exec[apt_update]"
           )
         }
@@ -101,7 +113,7 @@ describe 'apt::ppa', :type => :define do
           ],
           'command'     => "/usr/bin/add-apt-repository #{options} #{title}",
           'unless'      => "/usr/bin/test -s /etc/apt/sources.list.d/#{filename}",
-          'require'     => ["File[/etc/apt/sources.list.d]", "Package[#{package}]"],
+          'require'     => ["File[sources.list.d]", "Package[#{package}]"],
           'notify'      => "Exec[apt_update]"
           )
         }
@@ -109,7 +121,7 @@ describe 'apt::ppa', :type => :define do
     end
   end
 
-  [ { :lsbdistcodename => 'natty', 
+  [ { :lsbdistcodename => 'natty',
       :package => 'python-software-properties' },
     { :lsbdistcodename => 'quantal',
       :package => 'software-properties-common'},
@@ -121,7 +133,10 @@ describe 'apt::ppa', :type => :define do
            'package { "#{platform[:package]}": }->Apt::Ppa["ppa"]'
         end
         let :facts do
-          {:lsbdistcodename => '#{platform[:lsbdistcodename]}'}
+          {:lsbdistcodename => '#{platform[:lsbdistcodename]}',
+           :operatingsystem => 'Ubuntu',
+           :lsbdistid => 'Ubuntu',
+           :osfamily => 'Debian'}
         end
         let(:title) { "ppa" }
         let(:release) { "#{platform[:lsbdistcodename]}" }

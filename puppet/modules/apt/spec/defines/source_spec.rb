@@ -1,5 +1,9 @@
 require 'spec_helper'
+
 describe 'apt::source', :type => :define do
+  let(:facts) { { :lsbdistid => 'Debian' } }
+  GPG_KEY_ID = '4BD6EC30'
+
   let :title do
     'my_source'
   end
@@ -13,7 +17,7 @@ describe 'apt::source', :type => :define do
       :include_src        => true,
       :required_packages  => false,
       :key                => false,
-      :key_server         => 'keyserver.ubuntu.com',
+      :key_server         => false,
       :key_content        => false,
       :key_source         => false,
       :pin                => false
@@ -27,15 +31,14 @@ describe 'apt::source', :type => :define do
       :repos              => 'security',
       :include_src        => false,
       :required_packages  => 'apache',
-      :key                => 'key_name',
+      :key                => GPG_KEY_ID,
       :key_server         => 'keyserver.debian.com',
       :pin                => '600',
       :key_content        => 'ABCD1234'
     },
     {
-      :key                => 'key_name',
+      :key                => GPG_KEY_ID,
       :key_server         => 'keyserver.debian.com',
-      :key_content        => false,
     },
     {
       :ensure             => 'absent',
@@ -59,7 +62,7 @@ describe 'apt::source', :type => :define do
       end
 
       let :facts do
-        {:lsbdistcodename => 'karmic'}
+        {:lsbdistcodename => 'karmic', :lsbdistid => 'Ubuntu'}
       end
 
       let :params do
@@ -73,7 +76,7 @@ describe 'apt::source', :type => :define do
       let :content do
         content = "# #{title}"
         if param_hash[:architecture]
-          arch = "[arch=#{param_hash[:architecture]}]"
+          arch = "[arch=#{param_hash[:architecture]}] "
         end
         content << "\ndeb #{arch}#{param_hash[:location]} #{param_hash[:release]} #{param_hash[:repos]}\n"
 
@@ -134,13 +137,16 @@ describe 'apt::source', :type => :define do
       }
 
       it {
+        key_server  = param_hash[:key_server]  || nil
+        key_content = param_hash[:key_content] || nil
+        key_source  = param_hash[:key_source]  || nil
         if param_hash[:key]
           should contain_apt__key("Add key: #{param_hash[:key]} from Apt::Source #{title}").with({
             "key"         => param_hash[:key],
             "ensure"      => :present,
-            "key_server"  => param_hash[:key_server],
-            "key_content" => param_hash[:key_content],
-            "key_source"  => param_hash[:key_source],
+            "key_server"  => key_server,
+            "key_content" => key_content,
+            "key_source"  => key_source,
             "before"      => "File[#{title}.list]"
           })
         else
@@ -160,7 +166,7 @@ describe 'apt::source', :type => :define do
     let(:default_params) { Hash.new }
     let(:facts) { Hash.new }
     it { expect { should raise_error(Puppet::Error) } }
-    let(:facts) { { :lsbdistcodename => 'lucid' } }
+    let(:facts) { { :lsbdistcodename => 'lucid', :lsbdistid => 'Ubuntu' } }
     it { should contain_apt__source(title) }
   end
 end

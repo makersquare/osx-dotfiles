@@ -14,6 +14,9 @@
 #     to true, Puppet will purge all unmanaged entries from sources.list.d
 #   update_timeout - Overrides the exec timeout in seconds for apt-get update.
 #     If not set defaults to Exec's default (300)
+#   update_tries - Number of times that `apt-get update` will be tried. Use this
+#     to work around transient DNS and HTTP errors. By default, the command
+#     will only be run once.
 #
 # Actions:
 #
@@ -25,18 +28,26 @@
 class apt(
   $always_apt_update    = false,
   $disable_keys         = undef,
-  $proxy_host           = false,
+  $proxy_host           = undef,
   $proxy_port           = '8080',
   $purge_sources_list   = false,
   $purge_sources_list_d = false,
+  $purge_preferences    = false,
   $purge_preferences_d  = false,
-  $update_timeout       = undef
+  $update_timeout       = undef,
+  $update_tries         = undef,
+  $sources              = undef
 ) {
+
+  if $::osfamily != 'Debian' {
+    fail('This module only works on Debian or derivatives like Ubuntu')
+  }
 
   include apt::params
   include apt::update
 
-  validate_bool($purge_sources_list, $purge_sources_list_d, $purge_preferences_d)
+  validate_bool($purge_sources_list, $purge_sources_list_d,
+                $purge_preferences, $purge_preferences_d)
 
   $sources_list_content = $purge_sources_list ? {
     false => undef,
@@ -75,6 +86,13 @@ class apt(
     notify  => Exec['apt_update'],
   }
 
+  if $purge_preferences {
+    file { 'apt-preferences':
+      ensure  => absent,
+      path    => "${root}/preferences",
+    }
+  }
+
   file { 'preferences.d':
     ensure  => directory,
     path    => $preferences_d,
@@ -103,19 +121,34 @@ class apt(
   }
 
   $proxy_set = $proxy_host ? {
-    false   => absent,
+    undef   => absent,
     default => present
   }
 
-  file { 'configure-apt-proxy':
+  file { '01proxy':
     ensure  => $proxy_set,
+    path    => "${apt_conf_d}/01proxy",
+    content => "Acquire::http::Proxy \"http://${proxy_host}:${proxy_port}\";\n",
+    notify  => Exec['apt_update'],
+    mode    => '0644',
+    owner   => root,
+    group   => root,
+  }
+
+  file { 'old-proxy-file':
+    ensure  => absent,
     path    => "${apt_conf_d}/proxy",
-    content => "Acquire::http::Proxy \"http://${proxy_host}:${proxy_port}\";",
     notify  => Exec['apt_update'],
   }
 
   # Need anchor to provide containment for dependencies.
   anchor { 'apt::update':
     require => Class['apt::update'],
+  }
+
+  # manage sources if present
+  if $sources != undef {
+    validate_hash($sources)
+    create_resources('apt::source', $sources)
   }
 }

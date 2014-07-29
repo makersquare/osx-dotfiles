@@ -8,8 +8,12 @@ Puppet::Type.type(:pg_user).provide(:debian_postgresql) do
   optional_commands :su => 'su'
 
   def create
-    stm = "create role %s encrypted password '%s'" % [\
-        @resource.value(:name), @resource.value(:password) ]
+
+    if @resource.value(:password)
+      password_string = " encrypted password '%s'" % @resource.value(:password)
+    end
+
+    stm = "create role %s#{password_string}" % @resource.value(:name)
 
     if @resource.value(:createdb) == true
         stm = stm + " createdb"
@@ -51,7 +55,7 @@ Puppet::Type.type(:pg_user).provide(:debian_postgresql) do
   def exists?
     su_output = su("-", "postgres", "-c", "psql --quiet -A -t -c \"select 1 from pg_roles where rolname = '%s';\"" % @resource.value(:name))
     return false if su_output.length == 0
-    su_output.each do |line|
+    su_output.each_line do |line|
       if line == "1\n"
         return true
       else

@@ -26,17 +26,32 @@
 # Copyright 2013 Leon Brocard
 #
 define ohmyzsh::install() {
-  exec { 'ohmyzsh::git clone':
-    creates => "/home/${name}/.oh-my-zsh",
-    command => "/usr/bin/git clone git://github.com/robbyrussell/oh-my-zsh.git /home/${name}/.oh-my-zsh",
+  if $name == 'root' { $home = '/root' } else { $home = "${ohmyzsh::params::home}/${name}" }
+  exec { "ohmyzsh::git clone ${name}":
+    creates => "${home}/.oh-my-zsh",
+    command => "/usr/bin/git clone git://github.com/robbyrussell/oh-my-zsh.git ${home}/.oh-my-zsh",
     user    => $name,
     require => [Package['git'], Package['zsh']]
   }
 
-  user { "ohmyzsh::user ${name}":
-    ensure  => present,
-    name    => $name,
-    shell   => '/usr/bin/zsh',
-    require => Package['zsh'],
+  exec { "ohmyzsh::cp .zshrc ${name}":
+    creates => "${home}/.zshrc",
+    command => "/bin/cp ${home}/.oh-my-zsh/templates/zshrc.zsh-template ${home}/.zshrc",
+    user    => $name,
+    require => Exec["ohmyzsh::git clone ${name}"],
+  }
+
+  if ! defined(User[$name]) {
+    user { "ohmyzsh::user ${name}":
+      ensure     => present,
+      name       => $name,
+      managehome => true,
+      shell      => $ohmyzsh::params::zsh,
+      require    => Package['zsh'],
+    }
+  } else {
+    User <| title == $name |> {
+      shell => $ohmyzsh::params::zsh
+    }
   }
 }

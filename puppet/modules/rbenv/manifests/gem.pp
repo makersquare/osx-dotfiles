@@ -26,6 +26,16 @@
 #   Default: undefined
 #   This variable is required.
 #
+# [$skip_docs]
+#   Skips the installation of ri and rdoc docs.
+#   Default: false
+#   This variable is optional.
+
+# [$timeout]
+#   Seconds that a gem has to finish installing. Set to 0 for unlimited.
+#   Default: 300
+#   This variable is optional.
+#
 # === Examples
 #
 # rbenv::gem { 'thor': ruby_version => '2.0.0-p247' }
@@ -39,6 +49,8 @@ define rbenv::gem(
   $gem          = $title,
   $version      = '>=0',
   $ruby_version = undef,
+  $skip_docs    = false,
+  $timeout      = 300,
 ) {
   include rbenv
 
@@ -46,14 +58,21 @@ define rbenv::gem(
     fail('You must declare a ruby_version for rbenv::gem')
   }
 
+  $docs = $skip_docs ? {
+    /false/ => '',
+    /true/  => '--no-ri --no-rdoc'
+  }
+
   exec { "gem-install-${gem}-${ruby_version}":
-    command => "gem install ${gem} --version '${version}'",
+    command => "gem install ${gem} --version '${version}' ${docs}",
     unless  => "gem list ${gem} --installed --version '${version}'",
     path    => ["${install_dir}/versions/${ruby_version}/bin/",'/usr/bin','/usr/sbin','/bin','/sbin'],
+    timeout => $timeout
   }~>
   exec { "rbenv-rehash-${gem}-${ruby_version}":
     command     => "${install_dir}/bin/rbenv rehash",
     refreshonly => true,
+    environment => [ "RBENV_ROOT=${install_dir}" ],
   }~>
   exec { "rbenv-permissions-${gem}-${ruby_version}":
     command     => "/bin/chown -R ${rbenv::owner}:${rbenv::group} ${install_dir}/versions/${ruby_version}/lib/ruby/gems && /bin/chmod -R g+w ${install_dir}/versions/${ruby_version}/lib/ruby/gems",

@@ -10,11 +10,11 @@ describe 'rbenv::build' do
         :owner       => 'root',
         :group       => 'adm',
         :global      => false,
-        :cflags      => '-O3 -march=native',
+        :env         => ['RUBY_CFLAGS=-O3 -march=native'],
       }
     end
 
-    it { should include_class('rbenv') }
+    it { should contain_class('rbenv') }
 
     it { should contain_exec("own-plugins-2.0.0-p247") }
     it { should contain_exec("git-pull-rubybuild-2.0.0-p247") }
@@ -28,7 +28,7 @@ describe 'rbenv::build' do
           :owner       => 'root',
           :group       => 'adm',
           :global      => true,
-          :cflags      => '-O3 -march=native',
+          :env         => ['RUBY_CFLAGS=-O3 -march=native'],
         }
       end
 
