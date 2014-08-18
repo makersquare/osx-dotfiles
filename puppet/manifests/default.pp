@@ -26,36 +26,6 @@ package { ['sqlite3', 'libsqlite3-dev']:
   ensure => installed;
 }
 
-# --- PostgreSQL ---------------------------------------------------------------
-
-class install_postgres {
-  class { 'postgresql': }
-
-  class { 'postgresql::server': }
-
-  pg_user { 'rails':
-    ensure   => present,
-    createdb => true,
-    require  => Class['postgresql::server']
-  }
-
-  pg_user { 'vagrant':
-    ensure    => present,
-    superuser => true,
-    require   => Class['postgresql::server']
-  }
-
-  package { 'libpq-dev':
-    ensure => installed
-  }
-
-  package { 'postgresql-contrib':
-    ensure  => installed,
-    require => Class['postgresql::server'],
-  }
-}
-class { 'install_postgres': }
-
 # --- Packages -----------------------------------------------------------------
 
 package { 'curl':
@@ -74,7 +44,7 @@ package { 'vim':
   ensure => installed
 }
 
-# rmagick dependencies.
+#rmagick dependencies.
 package { 'libmagickwand-dev':
   ensure => installed
 }
@@ -105,9 +75,12 @@ class { 'dotfiles': }
 # --- Ruby ---------------------------------------------------------------------
 
 class { 'rbenv': install_dir => "${home}/.rbenv" }
+#specify ruby version to be default
 $rubyver = '2.0.0-p481'
 
+#install rbenv plugins
 rbenv::plugin { ['sstephenson/ruby-build', 'rkh/rbenv-update', 'sstephenson/rbenv-gem-rehash']: }
+
 rbenv::build { $rubyver: global => true }
 rbenv::gem { 'pry': ruby_version => $rubyver }
 rbenv::gem { 'hirb': ruby_version => $rubyver }
@@ -119,17 +92,55 @@ rbenv::gem { 'nokogiri': ruby_version => $rubyver }
 class { 'apt': }
 apt::ppa { 'ppa:chris-lea/node.js': }
 
+# directory for globally installed npm packages
+file { "/home/vagrant/.local/":
+  ensure => "directory",
+  owner => "vagrant",
+  group => "vagrant"
+}
+
+
 # --- Symlink Dir Creation -----------------------------------------------------
 
 file { "/home/vagrant/code/":
-    ensure => "directory"
+    ensure => "directory",
+    owner => "vagrant",
+    group => "vagrant"
 }
 
 file { "/home/vagrant/code/mks/":
-    ensure => "directory"
+    ensure => "directory",
+    owner => "vagrant",
+    group => "vagrant"
 }
 
 # --- Zsh and Oh-My-Zsh ---------------------------------------------------------------------
 
 class { 'ohmyzsh': }
 ohmyzsh::install { 'vagrant': }
+
+# --- Postgresql -----------------------------------------------------------------
+
+class { 'postgresql::server': }
+
+package { 'libpq-dev':
+  ensure => installed,
+  require   => Class['postgresql::server']
+}
+package { 'postgresql-contrib':
+    ensure  => installed,
+    require   => Class['postgresql::server']
+}
+
+postgresql::server::role { 'vagrant':
+  # password_hash => postgresql_password('marmot', 'mypasswd'),
+  createdb => true,
+  require   => Class['postgresql::server']
+}
+
+postgresql::server::db { 'vagrant':
+  user     => 'vagrant',
+  encoding => 'UTF8',
+  password => '',
+  require   => Class['postgresql::server']
+}
