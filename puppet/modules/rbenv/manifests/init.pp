@@ -58,8 +58,8 @@
 class rbenv (
   $repo_path   = 'https://github.com/sstephenson/rbenv.git',
   $install_dir = '/usr/local/rbenv',
-  $owner       = 'vagrant',
-  $group       = 'vagrant',
+  $owner       = 'root',
+  $group       = $rbenv::deps::group,
   $latest      = false,
 ) inherits rbenv::deps {
   include rbenv::deps

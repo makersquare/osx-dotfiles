@@ -87,13 +87,18 @@ rbenv::gem { 'hirb': ruby_version => $rubyver }
 rbenv::gem { 'mini_magick': ruby_version => $rubyver }
 rbenv::gem { 'nokogiri': ruby_version => $rubyver }
 
+exec {'chown_rbenv':
+  command => "chown -R vagrant:vagrant ${home}/.rbenv",
+  require   => Rbenv::Build[$rubyver]
+}
+
 # --- Node ---------------------------------------------------------------------
 
 class { 'apt': }
 apt::ppa { 'ppa:chris-lea/node.js': }
 
 # directory for globally installed npm packages
-file { "/home/vagrant/.local/":
+file { "${home}/.local/":
   ensure => "directory",
   owner => "vagrant",
   group => "vagrant"
@@ -102,13 +107,13 @@ file { "/home/vagrant/.local/":
 
 # --- Symlink Dir Creation -----------------------------------------------------
 
-file { "/home/vagrant/code/":
+file { "${home}/code/":
     ensure => "directory",
     owner => "vagrant",
     group => "vagrant"
 }
 
-file { "/home/vagrant/code/mks/":
+file { "${home}/code/mks/":
     ensure => "directory",
     owner => "vagrant",
     group => "vagrant"
@@ -133,7 +138,6 @@ package { 'postgresql-contrib':
 }
 
 postgresql::server::role { 'vagrant':
-  # password_hash => postgresql_password('marmot', 'mypasswd'),
   createdb => true,
   require   => Class['postgresql::server']
 }

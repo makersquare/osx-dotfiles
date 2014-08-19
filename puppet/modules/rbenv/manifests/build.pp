@@ -46,7 +46,7 @@ define rbenv::build (
   $install_dir = $rbenv::install_dir,
   $owner       = $rbenv::owner,
   $group       = $rbenv::group,
-  $global      = true,
+  $global      = false,
   $env         = [],
 ) {
   include rbenv
@@ -63,14 +63,14 @@ define rbenv::build (
 
   exec { "own-plugins-${title}":
     command => "chown -R ${owner}:${group} ${install_dir}/plugins",
-    user    => 'vagrant',
+    user    => 'root',
     unless  => "test -d ${install_dir}/versions/${title}",
     require => Class['rbenv'],
   }->
   exec { "git-pull-rubybuild-${title}":
     command => 'git reset --hard HEAD && git pull',
     cwd     => "${install_dir}/plugins/ruby-build",
-    user    => 'vagrant',
+    user    => 'root',
     unless  => "test -d ${install_dir}/versions/${title}",
     require => Rbenv::Plugin['sstephenson/ruby-build'],
   }->
@@ -81,7 +81,7 @@ define rbenv::build (
   }~>
   exec { "rbenv-ownit-${title}":
     command     => "chown -R ${owner}:${group} ${install_dir}/versions/${title} && chmod -R g+w ${install_dir}/versions/${title}",
-    user        => 'vagrant',
+    user        => 'root',
     refreshonly => true,
   }
 
