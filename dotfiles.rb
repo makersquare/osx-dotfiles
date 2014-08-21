@@ -14,7 +14,7 @@ BREW_ZSH = '/usr/local/bin/zsh'
 # this is for the purpose of hiding the username with the oh-my-zsh powerline theme
 # see agnoster theme: https://github.com/robbyrussell/oh-my-zsh/wiki/themes
 def set_default_user
-  ohai "Setting DEFAULT_USER env variable..."
+  pretty_print "Setting DEFAULT_USER env variable..."
   open("#{HOME_DIR}/.zshrc", 'a') do |f|
     f.puts "DEFAULT_USER=#{USERNAME}"
   end
@@ -22,7 +22,7 @@ end
 
 #prompt the user for git user name and password and set them globally
 def get_git_info
-  ohai "You'll now input your information to use with Git"
+  pretty_print "You'll now input your information to use with Git"
 
   puts "Input your full name to identify your Git commits (e.g. Jane Doe)"
   print "> "
@@ -38,7 +38,7 @@ end
 
 # backup old dotfiles, symlink new dotfiles to ~/
 def dot_file_replace
-  ohai "Symlinking dotfiles..."
+  pretty_print "Symlinking dotfiles..."
   DOT_FILES.each do |dot_file|
     dot_file_location = File.expand_path("~/#{dot_file}")
     unless File.exists?(dot_file_location)
@@ -66,7 +66,7 @@ end
 
 # Create 'subl' shortcut for ST2 or ST3
 def check_subl
-  ohai "Checking for existence of subl shortcut."
+  pretty_print "Checking for existence of subl shortcut."
   unless find_executable('subl')
     FileUtils.mkdir("#{HOME_DIR}/bin") unless File.exists?("#{HOME_DIR}/bin")
     if File.exists?("/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl")
@@ -85,7 +85,7 @@ def check_subl
 end
 
 def check_ohmyzsh
-  ohai "Checking for existence of ~/.oh-my-zsh"
+  pretty_print "Checking for existence of ~/.oh-my-zsh"
   unless File.exists?(File.expand_path('~/.oh-my-zsh'))
     `git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh`
     puts "cloned .oh_my_zsh to ~/ successfully"
@@ -99,7 +99,7 @@ def check_ohmyzsh
 end
 
 def check_zsh
-  ohai "Checking if ZSH is the current shell..."
+  pretty_print "Checking if ZSH is the current shell..."
   shell = `echo $SHELL`.chomp
   unless shell == BREW_ZSH
     puts "Current shell is not Brew's ZSH..."
@@ -133,7 +133,7 @@ class Array
   end
 end
 
-def ohai(*args)
+def pretty_print(*args)
   puts "#{Tty.blue}==>#{Tty.white} #{args.shell_s}#{Tty.reset}"
 end
 
@@ -146,7 +146,7 @@ def system(*args)
 end
 
 def sudo(*args)
-  ohai "/usr/bin/sudo", *args
+  pretty_print "/usr/bin/sudo", *args
   system "/usr/bin/sudo", *args
 end
 
@@ -186,12 +186,12 @@ at_exit { Kernel.system "/usr/bin/sudo", "-k" }
 abort "Sorry, we currently only support Mac OSX 10.7 and higher" if macos_version < "10.7"
 abort "Don't run this script with sudo!" if Process.uid == 0
 
-ohai "This script will setup your local development environment"
+pretty_print "This script will setup your local development environment"
 puts "Creating ~/code/mks directory"
 
 FileUtils.mkdir_p(MKS_DIR) unless File.exists?(MKS_DIR)
 
-ohai "This script will now attempt to setup your shell configuration."
+pretty_print "This script will now attempt to setup your shell configuration."
 puts "Only continue if you're connected to the internet."
 wait_for_user
 
@@ -243,6 +243,6 @@ else
   check_ohmyzsh
 end
 
-ohai "Congratulations, you're all finished! Go ahead, open a new shell window!"
+pretty_print "Congratulations, you're all finished! Go ahead, open a new shell window!"
 
 
