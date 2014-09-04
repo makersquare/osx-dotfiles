@@ -5,6 +5,7 @@
   "translate_tabs_to_spaces": true,
   "trim_trailing_white_space_on_save": true,
   "highlight_line": true,
+  "atomic_save": false,
   "file_exclude_patterns":
   [
     ".DS_Store"
