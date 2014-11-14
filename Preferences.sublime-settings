@@ -1,0 +1,20 @@
+{
+  "ensure_newline_at_eof_on_save": true,
+  "ignored_packages": ["Vintage"],
+  "tab_size": 2,
+  "translate_tabs_to_spaces": true,
+  "trim_trailing_white_space_on_save": true,
+  "highlight_line": true,
+  "atomic_save": false,
+  "file_exclude_patterns":
+  [
+    ".DS_Store"
+  ],
+  "folder_exclude_patterns":
+  [
+    ".bundle",
+    ".git",
+    ".sass-cache",
+    "vendor/bundle/gems"
+  ]
+}
